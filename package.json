@@ -1,0 +1,56 @@
+{
+  "name": "@takohemi/cli",
+  "version": "0.1.0",
+  "description": "Takohemi — Opinionated project scaffolding CLI with plugin architecture",
+  "type": "module",
+  "bin": {
+    "takohemi": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "start": "node dist/index.js",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "cli",
+    "scaffolding",
+    "boilerplate",
+    "react",
+    "nextjs",
+    "typescript",
+    "takohemi"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^13.1.0",
+    "prompts": "^2.4.2",
+    "chalk": "^5.4.1",
+    "ora": "^8.1.1",
+    "fs-extra": "^11.2.0",
+    "handlebars": "^4.7.8",
+    "degit": "^2.8.4",
+    "execa": "^9.5.2",
+    "semver": "^7.6.3"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/prompts": "^2.4.9",
+    "@types/node": "^22.10.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
+    "eslint": "^9.16.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ]
+}
