@@ -24,8 +24,13 @@
     "typescript",
     "takohemi"
   ],
-  "author": "",
+  "author": "Takohemi",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/takohemi/cli.git"
+  },
+  "homepage": "https://github.com/takohemi/cli#readme",
   "dependencies": {
     "commander": "^13.1.0",
     "prompts": "^2.4.2",

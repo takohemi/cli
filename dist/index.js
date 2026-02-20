@@ -352,7 +352,7 @@ import fs from "fs-extra";
 import Handlebars from "handlebars";
 var log2 = createLogger();
 var __dirname = path.dirname(fileURLToPath(import.meta.url));
-var TEMPLATES_ROOT = path.resolve(__dirname, "../../templates");
+var TEMPLATES_ROOT = path.resolve(__dirname, "../templates");
 Handlebars.registerHelper(
   "pascalCase",
   (str) => str.replace(/(^|[-_ ])(\w)/g, (_, _sep, char) => char.toUpperCase())

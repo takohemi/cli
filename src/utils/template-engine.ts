@@ -8,7 +8,7 @@ import { createLogger } from "./logger.js";
 const log = createLogger();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const TEMPLATES_ROOT = path.resolve(__dirname, "../../templates");
+const TEMPLATES_ROOT = path.resolve(__dirname, "../templates");
 
 // ============================================================================
 // Register Handlebars helpers
