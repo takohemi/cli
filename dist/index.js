@@ -771,7 +771,7 @@ async function createCommand(options) {
       log4.info(`  Extras:   ${chalk3.cyan(selectedExtras.join(", "))}`);
     }
     console.log("");
-    const projectDir = await scaffold({
+    await scaffold({
       projectName,
       stack,
       variables,
@@ -792,7 +792,7 @@ async function createCommand(options) {
 // src/commands/add.ts
 import chalk4 from "chalk";
 var log5 = createLogger();
-async function addCommand(module) {
+async function addCommand(_module) {
   log5.warn(
     `The ${chalk4.bold("add")} command is coming in v0.2.`
   );

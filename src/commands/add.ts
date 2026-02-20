@@ -3,7 +3,7 @@ import { createLogger } from "../utils/logger.js";
 
 const log = createLogger();
 
-export async function addCommand(module: string | undefined): Promise<void> {
+export async function addCommand(_module: string | undefined): Promise<void> {
   // TODO: v0.2 — This will read takohemi.json from the current project,
   // detect the stack, and generate modules (components, pages, hooks, etc.)
   //

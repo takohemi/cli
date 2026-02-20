@@ -61,7 +61,7 @@ export async function createCommand(options: CreateOptions): Promise<void> {
     console.log("");
 
     // Step 5: Scaffold
-    const projectDir = await scaffold({
+    await scaffold({
       projectName,
       stack,
       variables,
