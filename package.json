@@ -1,6 +1,6 @@
 {
   "name": "@takohemi/cli",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Takohemi — Opinionated project scaffolding CLI with plugin architecture",
   "type": "module",
   "bin": {
