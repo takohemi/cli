@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@opennextjs/cloudflare": "^1.16.5"
+  },
+  "scripts": {
+    "build:worker": "npx opennextjs-cloudflare build",
+    "deploy": "npx wrangler deploy"
+  }
+}

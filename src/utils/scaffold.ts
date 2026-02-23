@@ -2,7 +2,7 @@ import path from "node:path";
 import fs from "fs-extra";
 import ora from "ora";
 import { execa } from "execa";
-import type { TakohemiStack, TakohemiConfig, HookContext } from "../core/types.js";
+import type { TakohemiStack, TakohemiConfig, HookContext, TemplateSource } from "../core/types.js";
 import {
   resolveTemplatePath,
   processTemplate,
@@ -89,6 +89,25 @@ export async function scaffold(options: ScaffoldOptions): Promise<string> {
   // ── Step 3: After scaffold hook ───────────────────────────────────────
   if (stack.hooks.afterScaffold) {
     await stack.hooks.afterScaffold(hookCtx);
+  }
+
+  // ── Step 3.5: Apply variable-conditional overlays ────────────────────
+  for (const [varName, varValue] of Object.entries(variables)) {
+    if (varValue === "none") continue;
+
+    const overlaySource: TemplateSource = {
+      type: "local",
+      path: `${stack.id}/variables/${varName}/${varValue}`,
+    };
+
+    try {
+      const overlayPath = await resolveTemplatePath(overlaySource);
+      const overlaySpinner = ora(`Applying ${varName}: ${varValue}...`).start();
+      await mergeExtra(overlayPath, projectDir, allVars);
+      overlaySpinner.succeed(`Applied: ${varName} → ${varValue}`);
+    } catch {
+      // No overlay for this variable/value — skip silently
+    }
   }
 
   // ── Step 4: Apply selected extras ─────────────────────────────────────

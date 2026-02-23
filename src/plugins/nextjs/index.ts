@@ -96,6 +96,12 @@ const nextjsPlugin: TakohemiPlugin = {
           templateSource: { type: "local", path: "nextjs/extras/ci-github" },
         },
         {
+          id: "cloudflare",
+          name: "Cloudflare Workers",
+          description: "Deploy to Cloudflare Workers via OpenNext adapter",
+          templateSource: { type: "local", path: "nextjs/extras/cloudflare" },
+        },
+        {
           id: "seo",
           name: "SEO + Sitemap",
           description: "Metadata helpers, sitemap generation, and robots.txt",
