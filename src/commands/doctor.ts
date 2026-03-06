@@ -1,33 +1,57 @@
 import chalk from "chalk";
+import ora from "ora";
 import { createLogger } from "../utils/logger.js";
+import { findTakohemiConfig } from "../utils/generator.js";
+import {
+  validateProject,
+  formatDiagnostics,
+  getExitCode,
+} from "../utils/validator.js";
 
 const log = createLogger();
 
 export async function doctorCommand(): Promise<void> {
-  // TODO: v0.3 — Reads takohemi.json and validates:
-  // - Project structure matches the stack conventions
-  // - Dependencies are up to date
-  // - Lint config is present and valid
-  // - Required env vars are set
-  // - TypeScript config is correct
-  // - No circular dependencies
-  //
-  // Example output:
-  //   ✔ Project structure is valid
-  //   ✔ TypeScript config OK
-  //   ⚠ 3 dependencies have updates available
-  //   ✖ Missing .env variable: DATABASE_URL
+  const spinner = ora("Running diagnostics...").start();
 
-  log.warn(
-    `The ${chalk.bold("doctor")} command is coming in v0.3.`
-  );
-  log.info("It will validate your project against Takohemi standards:");
-  log.info("");
-  log.info(`  ${chalk.gray("$")} takohemi doctor`);
-  log.info("");
-  log.info(`  ${chalk.green("✔")} Project structure is valid`);
-  log.info(`  ${chalk.green("✔")} TypeScript config OK`);
-  log.info(`  ${chalk.yellow("⚠")} 3 dependencies have updates available`);
-  log.info(`  ${chalk.red("✖")} Missing .env variable: DATABASE_URL`);
-  log.info("");
+  // Find project
+  const projectInfo = await findTakohemiConfig();
+
+  if (!projectInfo) {
+    spinner.fail("Not a Takohemi project");
+    log.error(
+      `Run ${chalk.bold("takohemi create")} first, or run from a project directory.`
+    );
+    process.exit(1);
+  }
+
+  const { config, dir: projectDir } = projectInfo;
+
+  spinner.succeed(`Found project at: ${chalk.bold(projectDir)}`);
+
+  // Run validation
+  console.log("");
+  console.log(chalk.bold("🔍 Running diagnostics..."));
+  console.log("");
+
+  const results = await validateProject(projectDir);
+  console.log(formatDiagnostics(results));
+
+  // Exit with appropriate code
+  const exitCode = getExitCode(results);
+  if (exitCode !== 0) {
+    console.log("");
+    console.log(
+      chalk.red("✖ Project has failures. Please fix the issues above.")
+    );
+  } else if (results.some((r) => r.status === "warn")) {
+    console.log("");
+    console.log(
+      chalk.yellow("⚠ Project has warnings. Consider addressing them.")
+    );
+  } else {
+    console.log("");
+    console.log(chalk.green("✔ Project looks healthy!"));
+  }
+
+  process.exit(exitCode);
 }

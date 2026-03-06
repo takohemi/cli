@@ -23,6 +23,8 @@ export interface TakohemiStack {
   variables: TemplateVariable[];
   /** Optional extras that can be layered on top */
   extras: StackExtra[];
+  /** Code generators for adding modules to existing projects */
+  generators?: StackGenerator[];
   /** Post-scaffold hooks (install deps, init git, etc.) */
   hooks: StackHooks;
   /** Minimum CLI version required */
@@ -72,6 +74,24 @@ export interface StackExtra {
   templateSource: TemplateSource;
   /** Does this extra depend on other extras? */
   dependsOn?: string[];
+}
+
+/**
+ * Code generator for adding modules to existing projects
+ */
+export interface StackGenerator {
+  /** Unique ID (e.g., "component", "page", "hook") */
+  id: string;
+  /** Display name */
+  name: string;
+  /** Short description */
+  description: string;
+  /** Generator options/prompts */
+  options?: TemplateVariable[];
+  /** Template source for this generator */
+  templateSource: TemplateSource;
+  /** Subdirectory to generate into (e.g., "components", "pages") */
+  subDir?: string;
 }
 
 export interface StackHooks {

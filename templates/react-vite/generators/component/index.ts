@@ -1,0 +1,1 @@
+export { {{namePascal}} } from './{{namePascal}}';
