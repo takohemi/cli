@@ -104,6 +104,46 @@ const reactVitePlugin: TakohemiPlugin = {
           ctx.log.info("");
         },
       },
+
+      // Code generators
+      generators: [
+        {
+          id: "component",
+          name: "Component",
+          description: "React component with CSS Modules",
+          subDir: "src/components",
+          options: [
+            {
+              name: "withProps",
+              label: "Include props interface?",
+              type: "confirm",
+              defaultValue: "true",
+            },
+          ],
+          templateSource: { type: "local", path: "react-vite/generators/component" },
+        },
+        {
+          id: "page",
+          name: "Page",
+          description: "Page component with React Router",
+          subDir: "src/pages",
+          templateSource: { type: "local", path: "react-vite/generators/page" },
+        },
+        {
+          id: "hook",
+          name: "Hook",
+          description: "Custom React hook",
+          subDir: "src/hooks",
+          templateSource: { type: "local", path: "react-vite/generators/hook" },
+        },
+        {
+          id: "store",
+          name: "Store",
+          description: "Zustand state store",
+          subDir: "src/stores",
+          templateSource: { type: "local", path: "react-vite/generators/store" },
+        },
+      ],
     },
   ],
 };

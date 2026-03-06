@@ -122,6 +122,53 @@ const nextjsPlugin: TakohemiPlugin = {
           }
         },
       },
+
+      // Code generators
+      generators: [
+        {
+          id: "component",
+          name: "Component",
+          description: "React component (Client or Server)",
+          subDir: "src/components",
+          options: [
+            {
+              name: "client",
+              label: "Client component?",
+              type: "confirm",
+              defaultValue: "false",
+            },
+          ],
+          templateSource: { type: "local", path: "nextjs/generators/component" },
+        },
+        {
+          id: "page",
+          name: "Page",
+          description: "App Router page (route.tsx)",
+          subDir: "src/app",
+          templateSource: { type: "local", path: "nextjs/generators/page" },
+        },
+        {
+          id: "api",
+          name: "API Route",
+          description: "API route handler (route.ts)",
+          subDir: "src/app/api",
+          templateSource: { type: "local", path: "nextjs/generators/api" },
+        },
+        {
+          id: "hook",
+          name: "Hook",
+          description: "Custom React hook (use*)",
+          subDir: "src/hooks",
+          templateSource: { type: "local", path: "nextjs/generators/hook" },
+        },
+        {
+          id: "store",
+          name: "Store",
+          description: "Zustand state store",
+          subDir: "src/stores",
+          templateSource: { type: "local", path: "nextjs/generators/store" },
+        },
+      ],
     },
   ],
 };

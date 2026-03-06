@@ -39,8 +39,9 @@ program
   .description("Add a module to an existing project (v0.2)")
   .argument("[module]", "Module type (component, page, hook, store)")
   .argument("[name]", "Module name")
-  .action(async (module) => {
-    await addCommand(module);
+  .action(async (module, name, options) => {
+    await loadAllPlugins();
+    await addCommand({ module, name });
   });
 
 // ── doctor ──────────────────────────────────────────────────────────────
