@@ -1,7 +1,7 @@
 import path from "node:path";
 import fs from "fs-extra";
 import Handlebars from "handlebars";
-import type { TakohemiConfig, TemplateSource, StackGenerator } from "../core/types.js";
+import type { TakohemiConfig, StackGenerator } from "../core/types.js";
 import { resolveTemplatePath } from "./template-engine.js";
 
 const BINARY_EXTENSIONS = new Set([
@@ -44,22 +44,17 @@ export async function loadTakohemiConfig(
 export async function findTakohemiConfig(
   startPath: string = process.cwd()
 ): Promise<{ config: TakohemiConfig; dir: string } | null> {
-  // Check current directory
   let current = startPath;
 
-  // Search up to root
-  while (current !== path.parse(current).root) {
+  // Search up to and including the filesystem root
+  while (true) {
     const config = await loadTakohemiConfig(current);
     if (config) {
       return { config, dir: current };
     }
-    current = path.dirname(current);
-  }
-
-  // Check root
-  const rootConfig = await loadTakohemiConfig(startPath);
-  if (rootConfig) {
-    return { config: rootConfig, dir: startPath };
+    const parent = path.dirname(current);
+    if (parent === current) break; // reached root
+    current = parent;
   }
 
   return null;
@@ -181,7 +176,7 @@ async function processGeneratorTemplate(
         await fs.writeFile(destPath, processed, "utf-8");
       }
 
-      generatedFiles.push(processedName);
+      generatedFiles.push(path.relative(destDir, destPath));
     }
   }
 }
@@ -189,16 +184,6 @@ async function processGeneratorTemplate(
 // ============================================================================
 // Generator Discovery
 // ============================================================================
-
-/**
- * Gets all available generators for a stack.
- */
-export function getStackGenerators(
-  stackId: string,
-  generators: StackGenerator[]
-): StackGenerator[] {
-  return generators.filter((g) => g);
-}
 
 /**
  * Finds a generator by ID in a list of generators.

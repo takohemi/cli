@@ -10,7 +10,7 @@ const program = new Command();
 program
   .name("takohemi")
   .description("Opinionated project scaffolding CLI with plugin architecture")
-  .version("0.1.0");
+  .version("0.1.4");
 
 // ── create ──────────────────────────────────────────────────────────────
 program
@@ -36,7 +36,7 @@ program
 program
   .command("add")
   .alias("a")
-  .description("Add a module to an existing project (v0.2)")
+  .description("Add a module to an existing project")
   .argument("[module]", "Module type (component, page, hook, store)")
   .argument("[name]", "Module name")
   .action(async (module, name, options) => {
@@ -48,7 +48,7 @@ program
 program
   .command("doctor")
   .alias("d")
-  .description("Check project health and standards compliance (v0.3)")
+  .description("Check project health and standards compliance")
   .action(async () => {
     await doctorCommand();
   });

@@ -97,8 +97,8 @@ export async function addCommand(options: AddOptions): Promise<void> {
         message: `${selectedGenerator.name} name`,
         validate: (value: string) => {
           if (!value.trim()) return "Name is required";
-          if (!/^[a-zA-Z][a-zA-Z0-9]*$/.test(value))
-            return "Must start with letter, alphanumeric only";
+          if (!/^[a-zA-Z][a-zA-Z0-9-]*$/.test(value))
+            return "Must start with letter, alphanumeric and hyphens only";
           return true;
         },
       },
