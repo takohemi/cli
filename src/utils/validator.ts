@@ -2,7 +2,6 @@ import path from "node:path";
 import fs from "fs-extra";
 import { execa } from "execa";
 import chalk from "chalk";
-import type { TakohemiConfig } from "../core/types.js";
 import { loadTakohemiConfig } from "./generator.js";
 
 export interface DiagnosticResult {

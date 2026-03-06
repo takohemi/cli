@@ -24,7 +24,7 @@ export async function doctorCommand(): Promise<void> {
     process.exit(1);
   }
 
-  const { config, dir: projectDir } = projectInfo;
+  const { dir: projectDir } = projectInfo;
 
   spinner.succeed(`Found project at: ${chalk.bold(projectDir)}`);
 

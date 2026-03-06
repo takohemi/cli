@@ -1,3 +1,4 @@
+import { createRequire } from "node:module";
 import { Command } from "commander";
 import { loadAllPlugins } from "./plugins/loader.js";
 import { createCommand } from "./commands/create.js";
@@ -5,12 +6,15 @@ import { addCommand } from "./commands/add.js";
 import { doctorCommand } from "./commands/doctor.js";
 import { listCommand } from "./commands/list.js";
 
+const require = createRequire(import.meta.url);
+const { version } = require("../package.json");
+
 const program = new Command();
 
 program
   .name("takohemi")
   .description("Opinionated project scaffolding CLI with plugin architecture")
-  .version("0.1.4");
+  .version(version);
 
 // ── create ──────────────────────────────────────────────────────────────
 program
@@ -39,7 +43,7 @@ program
   .description("Add a module to an existing project")
   .argument("[module]", "Module type (component, page, hook, store)")
   .argument("[name]", "Module name")
-  .action(async (module, name, options) => {
+  .action(async (module, name, _options) => {
     await loadAllPlugins();
     await addCommand({ module, name });
   });
